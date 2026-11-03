@@ -1,0 +1,212 @@
+:root {
+  --ink: #17201b;
+  --muted: #5f6b64;
+  --surface: #ffffff;
+  --line: #d9dfdb;
+  --accent: #0a7a4b;
+  --unknown: #2f6fed;
+  --unavailable: #8a8f8c;
+  --neon: #39ff14;
+  --danger: #b3261e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #eef1ef;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+.app {
+  height: 100dvh;
+  position: relative;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  left: 16px;
+  max-width: 440px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 1000;
+}
+
+.search {
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 18%);
+  display: flex;
+  padding: 6px;
+}
+
+.search input {
+  border: 0;
+  flex: 1;
+  font-size: 16px;
+  min-width: 0;
+  outline: none;
+  padding: 8px 10px;
+}
+
+.search button,
+.choices button {
+  background: var(--accent);
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+}
+
+.search button:disabled {
+  opacity: 0.6;
+}
+
+.notice {
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 14%);
+  font-size: 14px;
+  line-height: 1.45;
+  padding: 10px 12px;
+}
+
+.notice.error {
+  color: var(--danger);
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.legend {
+  background: var(--surface);
+  border-radius: 8px;
+  bottom: 24px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 14%);
+  display: flex;
+  font-size: 12px;
+  gap: 10px;
+  left: 16px;
+  padding: 7px 10px;
+  position: absolute;
+  z-index: 1000;
+}
+
+.legend span {
+  align-items: center;
+  display: inline-flex;
+  gap: 4px;
+}
+
+.dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+
+.dot.unknown {
+  background: var(--unknown);
+}
+
+.dot.available {
+  background: var(--unknown);
+  box-shadow: 0 0 0 2px var(--neon);
+  animation: neon-dot 1s steps(1) infinite;
+}
+
+.dot.unavailable {
+  background: var(--unavailable);
+}
+
+/* Leaflet 원형 마커의 SVG path에 적용됩니다. */
+.marker-available {
+  animation: neon-blink 1s steps(1) infinite;
+  filter: drop-shadow(0 0 4px var(--neon));
+}
+
+@keyframes neon-blink {
+  0% {
+    stroke-opacity: 1;
+  }
+  50% {
+    stroke-opacity: 0.1;
+  }
+}
+
+@keyframes neon-dot {
+  0% {
+    box-shadow: 0 0 0 2px var(--neon);
+  }
+  50% {
+    box-shadow: 0 0 0 2px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-available,
+  .dot.available {
+    animation: none;
+  }
+}
+
+.popup-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.popup-meta {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 2px 0 8px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.popup-buttons button {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 8px;
+  white-space: nowrap;
+}
+
+.popup-buttons button.selected-available {
+  background: #e8ffe3;
+  border-color: #1fb800;
+}
+
+.popup-buttons button.selected-unavailable {
+  background: #eceeed;
+  border-color: var(--unavailable);
+}
